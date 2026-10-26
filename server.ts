@@ -149,12 +149,17 @@ function safeNext(value: string | null): string {
   return value;
 }
 
-function isAllowedOrigin(origin: string): boolean {
-  return (
-    origin === "https://board.zeda.dev" ||
-    origin === "http://127.0.0.1:4173" ||
-    origin === "http://localhost:4173"
-  );
+function isAllowedOrigin(origin: string, req: Request): boolean {
+  try {
+    const normalize = (host: string) => host.toLowerCase().replace(/\.$/, "");
+    const originUrl = new URL(origin);
+    const requestUrl = new URL(req.url);
+    // Aynı host, port/protokol farkı önemli değil. board.zeda.dev, localhost
+    // ve ileride eklenecek alias'lar böylece çalışır.
+    return normalize(originUrl.hostname) === normalize(requestUrl.hostname);
+  } catch {
+    return false;
+  }
 }
 
 function withSecurityHeaders(response: Response, cache = "private, no-store"): Response {
@@ -401,7 +406,10 @@ async function handle(req: Request, server: any): Promise<Response> {
   if (pathname === "/login") {
     if (req.method === "POST") {
       const origin = req.headers.get("origin");
-      if (origin && !isAllowedOrigin(origin)) {
+      if (origin && !isAllowedOrigin(origin, req)) {
+        console.warn(
+          `[board] rejected origin=${origin} host=${req.headers.get("host")} url=${req.url}`,
+        );
         return html("Geçersiz istek kaynağı.", 403);
       }
 

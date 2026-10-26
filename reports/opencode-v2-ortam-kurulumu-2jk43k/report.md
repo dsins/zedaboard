@@ -38,6 +38,31 @@ ama prod/şirket/sır işlerinde freni korumak.
   Cloudflare Access uygulamasının panelden oluşturulması.</p>
 </div>
 
+## Teslim özeti
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3 class="card-title">OpenCode</h3>
+    <p>Global <code>AGENTS.md</code>, izin kara listesi, <code>board</code> ve
+    <code>handoff</code> skill/komutları, <code>CLAUDE.md</code> köprüsü.</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">Sistem</h3>
+    <p>SSH config + <code>config.d/</code>, git ayarları, <code>gh</code> (auth
+    aktif), <code>sqlite3</code>, <code>fzf</code>, wildcard TLS.</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">Board</h3>
+    <p>Bun + SQLite, şifre, 5 saat ban, <code>noindex</code>, chart/tablo/tabs,
+    GitHub reposu ve systemd servisi.</p>
+  </div>
+  <div class="card">
+    <h3 class="card-title">Bekleyen</h3>
+    <p>Cloudflare Access uygulaması; sonrasında <code>code.zeda.dev</code>
+    açılacak. Backup ve şirket SSH host'ları sırası gelince.</p>
+  </div>
+</div>
+
 ## Ne değişti?
 
 <div class="table-wrap">
@@ -49,7 +74,7 @@ ama prod/şirket/sır işlerinde freni korumak.
 | Secret koruması | ✅ | `.env`, SSH anahtarı, token, DB |
 | SSH config | ✅ | Alias + keepalive + `config.d/` |
 | Git ayarları | ✅ | `main`, prune, autostash, rerere |
-| CLI araçları | ✅ | `gh`, `sqlite3`, `fzf` |
+| CLI araçları | ✅ | `gh` (auth aktif), `sqlite3`, `fzf` |
 | Caddy wildcard | ✅ | `*.zeda.dev`, DNS challenge |
 | Board | ✅ | `board.zeda.dev` yayında |
 | OpenCode UI | ⏳ | `code.zeda.dev` Access bekliyor |
@@ -307,6 +332,8 @@ düşer. Adımlar: `~/notes/runbooks/code-ui.md`.
 | Yanlış şifre ×3 | 429 — 5 saat ban |
 | `.env` okuma | `permission.rejected` |
 | `code.zeda.dev` | 404 — Access öncesi kapalı |
+| `gh auth status` | `dsins` aktif |
+| Login origin (port / trailing dot) | 303 — kabul |
 | GitHub push | `dsins/zedaboard` güncel |
 
 </div>
@@ -317,8 +344,6 @@ düşer. Adımlar: `~/notes/runbooks/code-ui.md`.
   <li><strong>Cloudflare Access:</strong> Zero Trust → Access → Applications →
   Self-hosted → <code>code.zeda.dev</code> → e-posta izni. Sonra
   <code>~/ops/enable-code-ui.sh</code>.</li>
-  <li><strong>GitHub CLI:</strong> <code>gh auth login</code> — PR/issue akışı
-  için.</li>
   <li><strong>Şirket SSH host'ları:</strong> <code>~/.ssh/config.d/*.conf</code>
   içine alias, kullanıcı ve gerekirse bastion.</li>
   <li><strong>Backup:</strong> sırası gelince restic + hedef depolama + restore
