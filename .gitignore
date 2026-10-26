@@ -3,6 +3,7 @@ data/
 public/index.html
 public/robots.txt
 public/*/index.html
+public/*/assets/
 *.log
 .env
 .env.*
