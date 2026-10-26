@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>{{title}} — Board</title>
+  <meta name="description" content="{{summary}}">
+  <link rel="stylesheet" href="/assets/board.css">
+  <link rel="stylesheet" href="/assets/hljs.css">
+  <script src="/assets/chart.umd.js" defer></script>
+  <script src="/assets/board.js" defer></script>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">◈</span><span>Board</span></a>
+    <div class="topbar-meta">
+      <span class="badge badge-soft">{{date}}</span>
+      <button class="btn btn-ghost" id="print-btn" type="button">Yazdır</button>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <a class="back" href="/">← Tüm raporlar</a>
+        <div class="toc-label">İçindekiler</div>
+        <nav class="toc">{{toc}}</nav>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="hero">
+        <div class="eyebrow">Board / {{slug}}</div>
+        <h1>{{title}}</h1>
+        <p class="lede">{{summary}}</p>
+        <div class="meta-row">
+          <span class="badge">{{date}}</span>
+          {{tags}}
+        </div>
+      </div>
+
+      <article class="prose">
+        {{content}}
+      </article>
+
+      <footer class="footer">
+        <span>Board · zeda.dev</span>
+        <span>{{date}}</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
