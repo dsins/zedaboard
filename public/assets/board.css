@@ -873,6 +873,8 @@ a:hover {
 }
 
 .chart-box {
+  position: relative;
+  height: 370px;
   padding: 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -880,7 +882,14 @@ a:hover {
 }
 
 .chart-box canvas {
-  max-height: 340px;
+  max-height: 100%;
+}
+
+@media (max-width: 680px) {
+  .chart-box {
+    height: 300px;
+    padding: 10px;
+  }
 }
 
 .chart-caption {

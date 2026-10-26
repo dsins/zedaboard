@@ -395,8 +395,7 @@ async function handle(req: Request, server: any): Promise<Response> {
   }
 
   if (pathname.startsWith("/assets/")) {
-    const cache = "public, max-age=3600, immutable";
-    return serveFile(pathname, cache);
+    return serveFile(pathname, "public, max-age=300");
   }
 
   if (pathname === "/login") {
