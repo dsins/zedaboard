@@ -151,6 +151,10 @@ function safeNext(value: string | null): string {
 
 function isAllowedOrigin(origin: string, req: Request): boolean {
   try {
+    // Bazı mobil uygulama içi tarayıcılar/gizlilik araçları Origin: null
+    // gönderebiliyor. Tek kullanıcılı, şifreli bir panelde bunu kabul et.
+    if (origin === "null") return true;
+
     const normalize = (host: string) => host.toLowerCase().replace(/\.$/, "");
     const originUrl = new URL(origin);
     const requestUrl = new URL(req.url);
